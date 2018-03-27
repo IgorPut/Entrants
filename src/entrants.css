@@ -1,0 +1,296 @@
+/*Стили для вспывающего окна формы*/
+.popup {
+    background:rgba(0,0,0,0.4);
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+.popup > div {
+    width: 300px;
+    min-height: 300px;
+    background: #069;
+    border-radius:20px;
+    margin: 5% auto;
+/*    position: relative;*/
+    text-align: center;
+    padding-top: 10px;
+}
+.popup > div > form {
+/*    position: relative;*/
+    margin: auto;
+    z-index:2;
+    width:200px;
+    padding: 10px 20px;
+    background:#FFFFFF;
+    border:1px solid #666666;
+    border-radius:20px;
+    box-shadow:0 0 5px rgba(0,0,0,0.5);
+}
+.popup > div > form input {
+    width:96%;
+/*    padding:5px 2%;*/
+    margin:10px 0;
+/*    border-radius:4px;*/
+}
+/*---------------*/
+/*Стили для объектов button "Отмена" и "Вернуться к списку"*/
+div > form:last-child {
+    background: inherit;
+    border: none;
+    box-shadow: none;
+}
+button {
+    width: 75%;
+    border-radius:4px;
+    padding-bottom: 3px;
+}
+/*------------------*/
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 80%;
+    background-color: #fafafa;
+}
+
+/*Заголовок страницы*/
+header {
+    font-size: 15px; 
+    padding: 0px;
+}
+
+h1 {
+    display: inline-block;
+    font-size: 24px;
+    color: #069;
+    position: relative;
+    margin: 0 0 5px 50px;
+}
+h1:before, h1:after {
+    content: '';
+    width: 50px;
+    height: 10%;
+    color: red;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    position: absolute;
+    top: 15px;;
+}
+h1:before {
+    left: -50px;
+}
+h1:after {
+    right: -50px;
+}
+
+.hello {
+    color: blue;
+    font-family: verdana;
+    font-style: italic;
+}
+
+/*Таблица*/
+table {
+    border-spacing: 0px;
+    border: none;
+}
+td {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-bottom: 1px solid #c7d8e5;
+    border-right: 1px solid #c7d8e5;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    color:#333;
+}
+td:last-child {
+    border: none;
+}
+th {
+    font-size: 14px;
+    background-color: #cbe3f3;
+    padding: 6px 12px;
+    color: #4c2c00;
+    font-weight: bold;
+    border-bottom: 1px solid #acc7dd;
+    border-right: 1px solid #acc7dd;
+    border-top: 1px solid #dceffd;
+    border-left: 1px solid #dceffd;    
+}
+
+th>a {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    color: #4c2c00;
+    font-size: 100%;
+
+}
+
+tr:nth-child(2n) {
+  background: #E5E5E5;
+}
+tr:hover {
+   background-color: #eaf1f7; 
+}
+
+/*Ошибки формы*/
+.error {
+    color: #c00;
+    margin-bottom: 10px;
+}
+
+/*Форма редактирования-добавления*/
+.form {
+    display: inline-block;
+    float: bottom;
+    background: #069;
+    padding: 0 10px;
+    border-radius: 20px;
+    position: relative;
+}
+form {
+    padding: 1px 10px 10px;
+    margin-top: 10px;
+    background-color: #fafafa;    
+    border-radius: 15px;
+}
+input {
+    border-radius:4px;
+    font-size: 12px;
+    padding: 5px 5px;
+}
+input[type="text"] {
+    width: 200px;
+}
+input:invalid, .bad {
+    border: 2px solid red;
+}
+/*.bad {
+    border: 2px solid red;
+}*/
+
+.bad:focus, select {
+    border-width: 2px;
+    border-color: gray lightgray lightgray gray;
+    border-radius:4px;
+}
+input[type="submit"] {
+    width: 100px;
+    cursor: pointer;
+}
+input[value="Сохранить"] {
+    background: green;
+    color: white;
+    margin-right: 86px;
+}
+input[value="Удалить"] {
+    background: red;
+    color: white;
+}
+input[disabled] {
+    background: lightgray;
+    cursor: default;
+}
+
+.radio {
+    margin-top: 0;
+}
+.radio:hover {
+    cursor: pointer;
+}
+
+form[name="editEntrant"] {
+    padding: 0;
+    margin: -2px;
+}
+input[value="Изменить"], input[value="Найти"]{
+    margin: 0;
+    padding: 0;
+    background: burlywood;
+}
+input[value="Изменить"]:hover, input[value="Найти"]:hover {
+    background: brown;
+    color: white;
+}
+
+/*Мигающая надпись "Сохранено"*/
+.save {
+    position: absolute;
+    transform: rotate(-60deg);
+    top: 200px;
+    left: -100px;
+    animation: blink 4s linear;
+    visibility: hidden;
+}
+@keyframes blink {
+    0% { visibility: visible; }
+    20% { visibility: visible; }
+    21% { visibility: hidden; }
+    40% { visibility: hidden; }
+    41% { visibility: visible; }
+    60% { visibility: visible; }
+    61% { visibility: hidden; }
+    80% { visibility: hidden; }
+    81% { visibility: visible; }
+    99% { visibility: visible; }
+    100% { visibility: hidden; }
+}
+/*----------------------*/
+
+.center {
+   text-align: center;
+}
+
+a {
+    color: #069;
+    margin-left: 10px;
+    text-decoration: none;
+    font-family: Century, Arial;
+    font-size: 110%;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/*Названия полей форм*/
+label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-top:10px;
+    margin-bottom: 2px;
+}
+
+button {
+    cursor: pointer;
+}
+
+footer, section>form {
+    background: bisque;
+    background: linear-gradient(to right, bisque, white);
+    padding: 10px;
+    border-radius: 0;
+    margin-top: 0;
+}
+
+/*footer>span {*/
+span {
+    letter-spacing: 3px;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.green {
+    color: green;
+}
+
+/*Элемент не отображается
+Используется для скоытия popup формы, сообщения о результате поиска
+и сообщения-картинки о сохранении данных*/
+.displaynone {
+    display: none;
+}
+.hidden {
+    visibility: hidden;
+}
