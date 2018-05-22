@@ -16,7 +16,7 @@
         header('Location: index.php');
         exit;
     }
-    
+   
 /*
  * Объявляем массив для хранения данных абитуриента. 
  * Содержит данные из базы при открытии формы в режиме редактирования,
@@ -63,10 +63,11 @@
         {
             //Сохраняем введенные значения в массиве $entrant[]
             $entrant = [
-                'name' => filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING),
-                'surname' => filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_STRING),
+                'name' => trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)),
+//                'name' => trim(strval($_POST['name'])),
+                'surname' => trim(filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_STRING)),
                 'sex' => filter_input(INPUT_POST, 'sex', FILTER_SANITIZE_STRING),
-                'group' => filter_input(INPUT_POST, 'group', FILTER_SANITIZE_STRING),
+                'group' => trim(filter_input(INPUT_POST, 'group', FILTER_SANITIZE_STRING)),
                 'email' => filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL),
                 'balls' => filter_input(INPUT_POST, 'balls', FILTER_SANITIZE_NUMBER_INT),
                 'yearOfBirth' => filter_input(INPUT_POST, 'yearOfBirth', FILTER_SANITIZE_NUMBER_INT),
@@ -128,6 +129,8 @@
                 //Устанавливаем флаг успешного сохранения. Как следствие - появляется мигающая надпись "Сохранено"
                 $saved = TRUE;
                 $hello = $_SESSION['entrant']['name'] . ", Вы можете откорректировать свои данные.";
+//                header("Location: " . $_SERVER['PHP_SELF']);
+//                exit;
             }
         }
     }
@@ -171,28 +174,31 @@
             <a href="index.php">(Вернуться к списку)</a>
         </header>
         <div class="form">
-            <form action="editForm.php" method="POST">
+            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
             <?php if ($saved): ?>
                 <img src="images/saved.png" class="save" alt=""/>
-            <?php endif; ?>
+            <?php 
+//                header("Location: " . $_SERVER['PHP_SELF']);
+//                exit;
+            endif; ?>
 
                 <!--Имя-->
                 <p>
-                    <label>Ваше имя: </label>
-                    <input type="text" name='name' value="<?= $entrant["name"] ?>" required/>
+                    <label for="name">Ваше имя: </label>
+                    <input type="text" name='name' id="name" value="<?= $entrant["name"] ?>" required/>
                 </p>
 
                 <!--Фамилия-->
             <?php if (!$surnameIsValid): ?>
                 <p>
-                    <label>Фамилия (максимум <?= Entrant::getInstance()->maxLengthSurname ?> символов): </label>
-                    <input type="text" name="surname" class="bad" value="<?php echo $entrant["surname"];?>" required/>
+                    <label for="surname">Фамилия (максимум <?= Entrant::getInstance()->maxLengthSurname ?> символов): </label>
+                    <input type="text" name="surname" id="surname" class="bad" value="<?php echo $entrant["surname"];?>" required/>
                 </p>
                 <span class="error"> Слишком длинная фамилия</span>
             <?php else: ?>
                 <p>
-                    <label>Фамилия (максимум <?= Entrant::getInstance()->maxLengthSurname ?> символов): </label>
-                    <input type="text" name="surname" value="<?php echo $entrant["surname"];?>" required/>
+                    <label for="surname">Фамилия (максимум <?= Entrant::getInstance()->maxLengthSurname ?> символов): </label>
+                    <input type="text" name="surname" id="surname" value="<?php echo $entrant["surname"];?>" required/>
                 </p>
             <?php endif; ?> 
 
@@ -210,48 +216,48 @@
 
                 <!--Группа-->
                 <p>
-                    <label>Группа (от 2 до 5 цифр или букв): </label><input type="text" pattern="[а-яА-ЯёЁa-zA-Z0-9]{2,5}" 
-                                        name="group" value="<?= $entrant["group"] ?>" required/>
+                    <label for="group">Группа (от 2 до 5 цифр или букв): </label>
+                    <input type="text" pattern="[а-яА-ЯёЁa-zA-Z0-9]{2,5}" name="group" id="group" value="<?= $entrant["group"] ?>" required/>
                 </p>
 
                 <!--E-mail-->
             <?php if ($emailIsFalse): ?>
                 <p>
-                    <label>E-mail: </label>
-                    <input type="text" name="email" class="bad" value="<?php echo $entrant["email"]; ?>" required/>
+                    <label for="email">E-mail: </label>
+                    <input type="text" name="email" id="email" class="bad" value="<?= $entrant["email"]; ?>" required/>
                 </p>
                     <span class="error"> Некорректный e-mail</span>
             <?php elseif (!$emailIsUnique): ?>
                 <p>
-                    <label>E-mail: </label>
-                    <input type="text" name="email" class="bad" value="<?php echo $entrant["email"]; ?>" required/>
+                    <label for="email">E-mail: </label>
+                    <input type="text" name="email" id="email" class="bad" value="<?= $entrant["email"]; ?>" required/>
                 </p>
                     <span class="error"> Абитуриент с таким e-mail уже существует.</span>
             <?php else: ?>             
                 <p>
-                    <label>E-mail: </label>
-                    <input type="text" name="email" value="<?php echo $entrant["email"]; ?>" required/>
+                    <label for="email">E-mail: </label>
+                    <input type="text" name="email" id="email" value="<?= $entrant["email"]; ?>" required/>
                 </p>
             <?php endif; ?>
 
                 <!--Баллы-->
             <?php if ($scoresIsValid): ?>
                 <p>
-                    <label>Кол-во набранных баллов (не более <?= Entrant::getInstance()->maxScores ?>): </label>
-                    <input type="text" pattern="[0-9]{1,3}" name="balls" value="<?= $entrant["balls"] ?>" required/>
+                    <label for="balls">Кол-во набранных баллов (не более <?= Entrant::getInstance()->maxScores ?>): </label>
+                    <input type="text" pattern="[0-9]{1,3}" id="balls" name="balls" value="<?= $entrant["balls"] ?>" required/>
                 </p>
             <?php else: ?>
                 <p>
-                    <label>Кол-во набранных баллов (не более <?= Entrant::getInstance()->maxScores ?>): </label>
-                    <input type="text" pattern="[0-9]{1,3}" class="bad" name="balls" value="<?= $entrant["balls"] ?>" required/>
+                    <label for="balls">Кол-во набранных баллов (не более <?= Entrant::getInstance()->maxScores ?>): </label>
+                    <input type="text" pattern="[0-9]{1,3}" class="bad" id="balls" name="balls" value="<?= $entrant["balls"] ?>" required/>
                 </p>
                     <span class="error">Неверное кол-во набранных баллов</span>
             <?php endif; ?>
 
                 <!--Год рождения-->
                 <p>
-                    <label>Год рождения: </label>
-                    <select name="yearOfBirth"> 
+                    <label for="yearOfBirth">Год рождения: </label>
+                    <select name="yearOfBirth" id="yearOfBirth"> 
             <?php 
                 //Создаем список выбора
                 $yearBirth = date("Y") - Entrant::getInstance()->minAge; //Максимальный год рождения для формирования списка выбора
@@ -286,20 +292,20 @@
                 <!--Кодовые слова (пароль)-->
             <?php if ($codewordIsValid): ?>
                 <p>
-                    <label>Кодовое слово: </label><input type="text" name="code" 
+                    <label for="code">Кодовое слово: </label><input type="text" name="code" id="code"
                                                          value="<?= $entrant["code"] ?>" required/>
                 </p>    
                 <p>
-                    <label>Повторите кодовое слово: </label><input type="text" name="code2" 
+                    <label for="code2">Повторите кодовое слово: </label><input type="text" name="code2" id="code2"
                                                          value="<?= $entrant["code2"] ?>" required/>
                 </p>
             <?php else: ?>
                 <p>
-                    <label>Кодовое слово: </label><input class="bad" type="text" name="code" 
+                    <label for="code">Кодовое слово: </label><input class="bad" type="text" name="code"  id="code"
                                                          value="<?= $entrant["code"] ?>" required/>
                 </p>    
                 <p>
-                    <label>Повторите кодовое слово: </label><input class="bad" type="text" name="code2" 
+                    <label for="code2">Повторите кодовое слово: </label><input class="bad" type="text" name="code2" id="code"
                                                          value="<?= $entrant["code2"] ?>" required/>
                     <span class="error">Кодовые слова не совпадают!</span>
                 </p>

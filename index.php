@@ -242,6 +242,7 @@
             $_SESSION['offset'], $_SESSION['order'], $_SESSION['direction'],
             $_SESSION['search'], $listOfFields);
     
+//include('indexhtml.php');
 ?>
 
 <html>
@@ -331,8 +332,8 @@
             <div>
                 <form name="login" action="index.php" method="POST">
                     <p>
-                        <label>Ваш e-mail:</label>
-                        <input class="<?= $classEmail ?>" type="text" name="email" value="<?= $email ?>"/>
+                        <label for="email">Ваш e-mail:</label>
+                        <input class="<?= $classEmail ?>" id="email" type="text" name="email" value="<?= $email ?>"/>
                     <?php   if ($emailIsEmpty): ?>
                                 <span class="error">Пожалуйста, введите Ваш e-mail!</span>
                     <?php   endif;
@@ -341,8 +342,8 @@
                     <?php   endif; ?>
                     </p>
                     <p>
-                        <label>Кодовое слово: </label>
-                        <input class="<?= $classCodeword ?>" type="password" name="codeword" value="" />
+                        <label for="codeWord">Кодовое слово: </label>
+                        <input class="<?= $classCodeword ?>" id="codeWord" type="password" name="codeword" value="" />
                     <?php   if ($codewordIsEmpty): ?>
                                 <span class="error">Не введено кодовое слово!</span>
                     <?php   endif; ?>
@@ -356,9 +357,11 @@
                     </p>
                 </form>
                 <form action="" method="get">
-                    <button class="close">Отмена</button>
+                    <button>Отмена</button>
                 </form>                
             </div>
         </div>
     </body>
 </html>
+
+
